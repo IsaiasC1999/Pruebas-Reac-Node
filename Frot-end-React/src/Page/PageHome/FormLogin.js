@@ -1,24 +1,29 @@
-import React,{useState,useRef} from 'react';
-import {useNavigate,redirect} from 'react-router-dom'
+import React,{useState,useRef, useContext} from 'react';
+import {useNavigate} from 'react-router-dom'
 import './FormLogin.css'
-import ServicesLogin  from '../services/ServicesLogin'
+import {loginSevices} from '../services/ServicesLogin'
+import {loginContext} from '../Context/LoginContext'
 
 
 const FormLogin = ({editFinal})=> {
 
         const [usuario, setUsuario] = useState("");
         const [contraseña, setContraseña] = useState("");
+        const {setisAutenticate,setRole} = useContext(loginContext)
         const navigate = useNavigate();              
         const refSpan = useRef();
 
+        
 
-        const hanglerSubmit = async  (e)=>{
+      const hanglerSubmit = async  (e)=>{
           e.preventDefault();
           
           try {
-            const {token,role} = await ServicesLogin.loginSevices(usuario,contraseña)
-            editFinal({token,role})
-            navigate('/Home')
+            const {jwt,role} = await loginSevices(usuario,contraseña)
+            editFinal({jwt,role})
+            setisAutenticate(true)
+            setRole(role)
+            navigate("/Home")
 
           } catch (error) {
               

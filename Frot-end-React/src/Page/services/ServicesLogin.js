@@ -1,12 +1,12 @@
 
 import axios from "axios";
 
-// fetch("http://localhost:3555/AuthToken/login", requestOptions)
+// fetch("http://localhost:4000/AuthToken/login", requestOptions)
 //   .then(response => response.text())
 //   .then(result => console.log(result))
 //   .catch(error => console.log('error', error));
 
-const loginSevices = async (usu, pas) => {
+ export const loginSevices = async (usu, pas) => {
 
 
 
@@ -44,12 +44,12 @@ const loginSevices = async (usu, pas) => {
     // ------------ Con axios  
 
 
-    const consulta = await axios.post("http://localhost:3555/AuthToken/login", {email: usu,
+    const consulta = await axios.post("http://localhost:4000/AuthToken/login", {email: usu,
     password : pas })
 
     const data = await consulta.data;
+    console.log(data)
     return data;
 }
 
 
-export default { loginSevices };
