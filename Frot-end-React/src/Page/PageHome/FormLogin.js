@@ -5,28 +5,29 @@ import {loginSevices} from '../services/ServicesLogin'
 import {loginContext} from '../Context/LoginContext'
 
 
-const FormLogin = ({editFinal})=> {
+const FormLogin = ()=> {
 
         const [usuario, setUsuario] = useState("");
         const [contraseña, setContraseña] = useState("");
-        const {setisAutenticate,setRole} = useContext(loginContext)
+        const {setRole,login} = useContext(loginContext)
         const navigate = useNavigate();              
         const refSpan = useRef();
 
-        
+
 
       const hanglerSubmit = async  (e)=>{
           e.preventDefault();
           
           try {
             const {jwt,role} = await loginSevices(usuario,contraseña)
-            editFinal({jwt,role})
-            setisAutenticate(true)
+            // editFinal({jwt,role})
+            login(jwt)
             setRole(role)
             navigate("/Home")
 
           } catch (error) {
               
+             console.log(error)
                 refSpan.current.style.display = "block"  
                setTimeout(() => {
                 refSpan.current.style.display= "none"

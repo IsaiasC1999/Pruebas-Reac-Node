@@ -1,6 +1,7 @@
 
 import axios from "axios";
 
+
 // fetch("http://localhost:4000/AuthToken/login", requestOptions)
 //   .then(response => response.text())
 //   .then(result => console.log(result))
@@ -45,11 +46,27 @@ import axios from "axios";
 
 
     const consulta = await axios.post("http://localhost:4000/AuthToken/login", {email: usu,
-    password : pas })
+    contra : pas })
 
     const data = await consulta.data;
-    console.log(data)
+    
     return data;
 }
 
+
+export const dataUser = async()=>{
+
+    
+    const datainfo = await  axios({
+        method: 'get',
+        url: 'http://localhost:4000/AuthToken/profile',
+        headers : {
+            'Authorization': window.localStorage.getItem('jwt')
+        }
+    })
+
+    const resu =  await datainfo.data
+    console.log(resu)
+    return resu;
+}
 

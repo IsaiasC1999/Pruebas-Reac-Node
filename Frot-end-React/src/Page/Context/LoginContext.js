@@ -5,23 +5,35 @@ export const loginContext = createContext();
 
 export const LoginProvider = ({children})=>{
 
-    const [isAutenticate, setisAutenticate] = useState(window.localStorage.getItem('IsAutenticate') || false)  ;
+    
+    const [jwt, setJwt] = useState(Boolean(localStorage.getItem('jwt')));
+
+    const [data, setData] = useState(null);
+
     const [role, setRole] = useState(null);
-
-    const verify = ()=>{
-        // hago la logica de verificar si le token sigue existiendo
+    // const verify = ()=>{
+    //     // hago la logica de verificar si le token sigue existiendo
         
-        // y modifico el estado del isAutenticate
+    //     // y modifico el estado del isAutenticate
 
 
-    } 
+    // } 
 
-    const login = ()=>{
-        localStorage.setItem('IsAutenticate',true)
+    const login = (valor)=>{
+        localStorage.setItem('jwt',valor)
+        setJwt(true)  
+                
     }
 
+    const logout = ()=>{
+        localStorage.removeItem('jwt')
+        setJwt(false)
+        setRole(null)
+        setData(null)
+    } 
+    console.log(jwt)  
     return(
-        <loginContext.Provider value={{isAutenticate,setRole,role,setisAutenticate}} >
+        <loginContext.Provider value={{data,setData,login,setJwt,jwt,logout,role ,setRole}} >
             {children}
         </loginContext.Provider>
     );
